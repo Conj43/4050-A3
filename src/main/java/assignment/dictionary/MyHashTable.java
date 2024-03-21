@@ -6,42 +6,52 @@ package assignment.dictionary;
 
 //
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
 
  */
 
 
-public class MyHashTable<K,V>
-
-
-{
+public class MyHashTable<K,V> {
     private static final int DEFAULT_CAPACITY = 10;
     private static final int MAX_CAPACITY = 10000;
     private AList<Entry<K, V>>[] buckets;
     private int size;
 
 
-    public MyHashTable(){
+    public MyHashTable() {
         this(DEFAULT_CAPACITY);
     }
 
-    public MyHashTable(int initial_capacity){
+
+
+    @Override
+    public String toString() {
+        return "MyHashTable{" +
+                "buckets=" + Arrays.toString(buckets) +
+                ", size=" + size +
+                '}';
+    }
+
+
+    public MyHashTable(int initial_capacity) {
         buckets = new AList[initial_capacity];
-        for(int i = 0; i < initial_capacity; i++){
+        for (int i = 0; i < initial_capacity; i++) {
             buckets[i] = new AList<>();
         }
         size = 0;
     }
 
 
-    public V put(K key, V value){
+    public V put(K key, V value) {
         int index = hash(key);
         AList<Entry<K, V>> bucket = buckets[index];
 
-        for(Entry<K, V> entry : bucket){
-            if(entry.getKey().equals(key)){
+        for (Entry<K, V> entry : bucket) {
+            if (entry.getKey().equals(key)) {
                 V old = entry.getValue();
                 entry.setValue(value);
                 return old;
@@ -53,23 +63,22 @@ public class MyHashTable<K,V>
     }
 
 
-    public V get(K key){
+    public V get(K key) {
         int index = hash(key);
 
-        for(Entry<K, V> entry : buckets[index]){
-            if(entry.getKey().equals(key)){
+        for (Entry<K, V> entry : buckets[index]) {
+            if (entry.getKey().equals(key)) {
                 return entry.getValue();
             }
         }
         return null;
     }
 
-    private int hash(K key){
+    private int hash(K key) {
         int hashCode = key.hashCode();
         int index = hashCode % buckets.length;
         return index >= 0 ? index : index + buckets.length;
     }
-
 
 
     public V remove(K key) {
@@ -89,26 +98,25 @@ public class MyHashTable<K,V>
     }
 
 
-
-    public V getValue(K key){
+    public V getValue(K key) {
         int index = hash(key);
-        AList<Entry<K,V>> bucket = buckets[index];
+        AList<Entry<K, V>> bucket = buckets[index];
 
-        for(Entry<K, V> entry : bucket){
-            if(entry.getKey().equals(key)){
+        for (Entry<K, V> entry : bucket) {
+            if (entry.getKey().equals(key)) {
                 return entry.getValue();
             }
         }
         return null;
     }
 
-    public boolean containsKey(K key){
+    public boolean containsKey(K key) {
 
         int index = hash(key);
-        AList<Entry<K,V>> bucket = buckets[index];
+        AList<Entry<K, V>> bucket = buckets[index];
 
-        for(Entry<K, V> entry : bucket){
-            if(entry.getKey().equals(key)){
+        for (Entry<K, V> entry : bucket) {
+            if (entry.getKey().equals(key)) {
                 return true;
             }
         }
@@ -134,14 +142,13 @@ public class MyHashTable<K,V>
 
     }
 
-    public int getSize(){
+    public int getSize() {
         return size;
     }
 
 
     // You need to implement this class without using the
-   // Hashtable class from Java (“java.util.Hashtable<K,V>”).
-
+    // Hashtable class from Java (“java.util.Hashtable<K,V>”).
 
 
 }

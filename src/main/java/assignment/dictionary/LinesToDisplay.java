@@ -20,10 +20,12 @@ public class LinesToDisplay {
     public LinesToDisplay() {
         //ADD CODE FOR THE CONSTRUCTOR
 //>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>        
-        
+        lines = new AList[LINES]; //create A list of size LINES
+        for (int i = 0; i < LINES; i++) {
+            lines[i] = new AList<Wordlet>(); //create a new A list of type wordlet for each line
+        }
+        currentLine = 0; //set current position to 0
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
     }
 
     /**
@@ -34,7 +36,7 @@ public class LinesToDisplay {
         //ADD CODE HERE TO ADD A WORDLET TO THE CURRENT LINE
 
 //>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>        
-       
+       lines[currentLine].add(w); //adds wordlet to current line
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
@@ -46,7 +48,12 @@ public class LinesToDisplay {
     public void nextLine() {
         //ADD CODE TO HANDLE THE NEXT LINE
 //>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>        
-
+    currentLine++; //increase current line
+        if (currentLine == LINES) { //if we are at end of array
+            System.arraycopy(lines, 1, lines, 0, LINES - 1); //copy array and shift each element up one
+            lines[LINES - 1] = new AList<>(); //clears last line by overriding it
+            currentLine--; // decrement so we do not go out of bounds
+        }
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
