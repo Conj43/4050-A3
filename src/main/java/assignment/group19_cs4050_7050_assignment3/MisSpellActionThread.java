@@ -1,4 +1,4 @@
-package assignment.dictionary;
+package assignment.group19_cs4050_7050_assignment3;
 
 import java.io.*;
 import java.util.*;

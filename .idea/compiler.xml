@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Dictionary" />
+        <module name="group19_cs4050_7050_assignment3" />
       </profile>
     </annotationProcessing>
   </component>
