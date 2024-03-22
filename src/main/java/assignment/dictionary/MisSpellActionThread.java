@@ -91,7 +91,9 @@ public class MisSpellActionThread implements Runnable {
      *
      */
     public void checkWords(String theFileName, DictionaryInterface<String, String> theDictionary) {
-
+            //we have punctuation as part of words, and if word is in dictionary, punctuation is blue
+        // if not, punctuation attached to word is red
+        //we did this because it was not specified how to be implemented
             Scanner input;
             try {
 
