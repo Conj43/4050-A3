@@ -100,8 +100,7 @@ public class MisSpellActionThread implements Runnable {
                 while (input.hasNextLine()) //goes through the file
                 {
                     String line = input.nextLine();
-                    //controller.SetMsg("line being read");
-                    //showLines(myLines);
+
                     Scanner lineScanner = new Scanner(line); //scanner for reading the lines and dividing them
                     int wordcount = 0;
                     lineScanner.useDelimiter("\\s+"); //divides the line into words  goes by whitespaces
@@ -126,6 +125,7 @@ public class MisSpellActionThread implements Runnable {
                         myLines.addWordlet(currWord); //adds the wordlet to mylines
                     }
                     showLines(myLines);
+                    myLines.nextLine();
                     lineScanner.close();
 
 

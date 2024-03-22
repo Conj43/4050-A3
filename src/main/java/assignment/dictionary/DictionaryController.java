@@ -43,22 +43,25 @@ public class DictionaryController implements Initializable {
             String family = "Helvetica";
             double size = 20;
             view.getChildren().clear();
-        System.out.println("current line = " + lines.getCurrentLine());
+
             for (int i = 0; i < lines.getCurrentLine(); i++) {
                 TextFlow newLine = new TextFlow();
                 newLine.getChildren().add(new Text(""));
                 Iterator<Wordlet> iter = lines.getLines()[i].getIterator();
-                System.out.println("before loop");
+
                 while (iter.hasNext()) {
-                    System.out.println("in loop");
+
                     Wordlet word = iter.next();
-                    Text checkedWord = new Text(word.getWord());
-                    checkedWord.setFont(Font.font(family, size));
+
+                    Text checkedWord;
                     if (word.isSpelledCorrectly()) {
+                        checkedWord = new Text(word.getWord() + " ");
                         checkedWord.setFill(Color.BLUE);
                     } else {
+                        checkedWord = new Text(word.getWord() + " ");
                         checkedWord.setFill(Color.RED);
                     }
+                    checkedWord.setFont(Font.font(family, size));
                     newLine.getChildren().add(checkedWord);
                 }
                 view.getChildren().add(newLine);
