@@ -76,7 +76,8 @@ public class MyHashTable<K,V> {
 
     private int hash(K key) { //used for hash values
         int hashCode = key.hashCode(); //use given hash code for java objects ( i think we are allowed to use this )
-        return hashCode % buckets.length; //return index
+        int index =  hashCode % buckets.length; //re size
+        return index >= 0 ? index : index + buckets.length; // make sure we return positive integer
 
     }
 
