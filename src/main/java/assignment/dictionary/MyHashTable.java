@@ -22,14 +22,14 @@ public class MyHashTable<K,V> {
     private int size;
 
 
-    public MyHashTable() {
+    public MyHashTable() { //constructor
         this(DEFAULT_CAPACITY);
     }
 
 
 
     @Override
-    public String toString() {
+    public String toString() { //to string method
         return "MyHashTable{" +
                 "buckets=" + Arrays.toString(buckets) +
                 ", size=" + size +
@@ -38,50 +38,50 @@ public class MyHashTable<K,V> {
 
 
     public MyHashTable(int initial_capacity) {
-        buckets = new AList[initial_capacity];
+        buckets = new AList[initial_capacity]; //instantiate Alist for buckets
         for (int i = 0; i < initial_capacity; i++) {
-            buckets[i] = new AList<>();
+            buckets[i] = new AList<>(); //makes each bucket contain an Alist
         }
         size = 0;
     }
 
 
-    public V put(K key, V value) {
-        int index = hash(key);
+    public V put(K key, V value) { //puts new entry into table
+        int index = hash(key); //find hash value
         AList<Entry<K, V>> bucket = buckets[index];
 
         for (Entry<K, V> entry : bucket) {
-            if (entry.getKey().equals(key)) {
-                V old = entry.getValue();
+            if (entry.getKey().equals(key)) { //see if entry with this key already exists
+                V old = entry.getValue(); //in this implementation we override old and return the old value
                 entry.setValue(value);
                 return old;
             }
         }
         bucket.add(new Entry<K, V>(key, value));
-        size++;
-        return null;
+        size++; //increment size
+        return null; //return null if there was no old key found
     }
 
 
-    public V get(K key) {
-        int index = hash(key);
+    public V get(K key) { //get an element
+        int index = hash(key); //find hash value
 
         for (Entry<K, V> entry : buckets[index]) {
-            if (entry.getKey().equals(key)) {
+            if (entry.getKey().equals(key)) { //loop through and look for given key
                 return entry.getValue();
             }
         }
-        return null;
+        return null; //return null if not found
     }
 
-    private int hash(K key) {
-        int hashCode = key.hashCode();
-        int index = hashCode % buckets.length;
-        return index >= 0 ? index : index + buckets.length;
+    private int hash(K key) { //used for hash values
+        int hashCode = key.hashCode(); //use given hash code for java objects ( i think we are allowed to use this )
+        return hashCode % buckets.length; //return index
+
     }
 
 
-    public V remove(K key) {
+    public V remove(K key) { //remove element with given key
         int index = hash(key);
         AList<Entry<K, V>> bucket = buckets[index];
 
@@ -89,20 +89,20 @@ public class MyHashTable<K,V> {
             Entry<K, V> entry = bucket.getEntry(i);
             if (entry.getKey().equals(key)) {
                 V value = entry.getValue();
-                bucket.remove(i);
+                bucket.remove(i); //remove element at current index
                 size--;
-                return value;
+                return value; //return value of element being removed
             }
         }
-        return null;
+        return null; //if not found return null
     }
 
 
-    public V getValue(K key) {
+    public V getValue(K key) { //getter that gets value at given key
         int index = hash(key);
         AList<Entry<K, V>> bucket = buckets[index];
 
-        for (Entry<K, V> entry : bucket) {
+        for (Entry<K, V> entry : bucket) { //finds value with given key
             if (entry.getKey().equals(key)) {
                 return entry.getValue();
             }
@@ -110,12 +110,12 @@ public class MyHashTable<K,V> {
         return null;
     }
 
-    public boolean containsKey(K key) {
+    public boolean containsKey(K key) { //returns true if key is in table, false if not
 
         int index = hash(key);
         AList<Entry<K, V>> bucket = buckets[index];
 
-        for (Entry<K, V> entry : bucket) {
+        for (Entry<K, V> entry : bucket) { //looks for element with given key
             if (entry.getKey().equals(key)) {
                 return true;
             }
@@ -123,16 +123,16 @@ public class MyHashTable<K,V> {
         return false;
     }
 
-    public void clear() {
+    public void clear() { //clears entire table
         for (AList<Entry<K, V>> bucket : buckets) {
             bucket.clear();
         }
-        size = 0;
+        size = 0; //resets size to 0
     }
 
     public boolean isEmpty() {
         return size == 0;
-    }
+    } //if size == 0 return true else return false
 
     public Iterable<K> keySet() {
         return new Iterable<K>() {

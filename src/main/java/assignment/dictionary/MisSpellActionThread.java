@@ -113,6 +113,7 @@ public class MisSpellActionThread implements Runnable {
                     lineScanner.useDelimiter("\\s+");
                     int lineIndex = 0;
                     while (lineScanner.hasNext()) {
+
                         words[lineIndex] = lineScanner.next(); // puts the words into the words array
                         lineIndex++;
                     }
@@ -124,7 +125,7 @@ public class MisSpellActionThread implements Runnable {
                         Wordlet currWord = new Wordlet(word, spelling);
                         myLines.addWordlet(currWord); //adds the wordlet to mylines
                     }
-                    showLines(myLines);
+                    showLines(myLines); //display line
                     myLines.nextLine();
                     lineScanner.close();
 
@@ -144,10 +145,12 @@ public class MisSpellActionThread implements Runnable {
      */
     public boolean checkWord(String word, DictionaryInterface<String, String> theDictionary) {
         boolean result = false;
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-        result = theDictionary.contains(word.toLowerCase());
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+        String wordWithoutPunctuation = word.replaceAll("\\p{Punct}", ""); //exclude punctuation
+
+
+        result = theDictionary.contains(wordWithoutPunctuation.toLowerCase()); //check word without punctuation
 
         return result;
 

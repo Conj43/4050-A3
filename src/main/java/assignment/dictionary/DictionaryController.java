@@ -50,28 +50,27 @@ public class DictionaryController implements Initializable {
             Iterator<Wordlet> iter = lines.getLines()[i].getIterator();
 
             while (iter.hasNext()) {
+
                 Wordlet word = iter.next();
-
-                // Exclude punctuation from the word
-                String wordText = word.getWord();
-
-
                 Text checkedWord;
+
                 if (word.isSpelledCorrectly()) {
-                    checkedWord = new Text(wordText + " ");
+                    checkedWord  = new Text(word.getWord() + " "); //add a space after each word because we split using spaces
                     checkedWord.setFill(Color.BLUE);
                 } else {
-                    checkedWord = new Text(wordText + " ");
+                    checkedWord = new Text(word.getWord() + " ");
                     checkedWord.setFill(Color.RED);
                 }
                 checkedWord.setFont(Font.font(family, size));
-                newLine.getChildren().add(checkedWord);
 
+                newLine.getChildren().add(checkedWord);
 
             }
             view.getChildren().add(newLine);
         }
     }
+
+
 
 
 
