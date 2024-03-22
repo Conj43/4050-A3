@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package assignment.dictionary;
+package assignment.group19_cs4050_7050_assignment3;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import java.net.URL;
 
 /**
  *
@@ -20,8 +22,12 @@ import javafx.stage.Stage;
 public class Dictionary extends Application {
     
     @Override
-    public void start(Stage stage) throws Exception {         
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("dictionary-view.fxml"));
+    public void start(Stage stage) throws Exception {
+
+
+
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/assignment/dictionary/dictionary-view.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         
         Scene scene = new Scene(root);

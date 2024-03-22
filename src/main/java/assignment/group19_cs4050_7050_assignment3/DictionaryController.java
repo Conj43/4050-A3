@@ -1,10 +1,9 @@
-package assignment.dictionary;
+package assignment.group19_cs4050_7050_assignment3;
 
 import java.net.URL;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
