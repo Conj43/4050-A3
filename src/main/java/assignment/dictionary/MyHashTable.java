@@ -135,13 +135,133 @@ public class MyHashTable<K,V> {
     }
 
     public Iterable<K> keySet() {
-
+        return new Iterable<K>() {
+            @Override
+            public Iterator<K> iterator() {
+                return new KeyIterator(); //returns an iterable object that provides access to the keys in the hash table
+            }
+        };
     }
 
     public Iterable<V> values() {
+        return new Iterable<V>() {
+            @Override
+            public Iterator<V> iterator() {
+                return new ValueIterator(); // returns an iterable object that provides access to the values
+            }
+        };
+    }
+
+    private class KeyIterator implements Iterator<K> {
+        private int currentBucket; //the index of the current bucket
+        private Iterator<Entry<K, V>> entryIterator; //iterator over the current entries in the bucket
+
+        //constructor that inits the iterator
+        public KeyIterator() {
+            currentBucket = 0;
+            entryIterator = buckets[currentBucket].iterator();
+        }
+
+        @Override // uses the iterator to check if there is a next element in the hash table
+        public boolean hasNext() {
+            if(currentBucket >= buckets.length) //if its at the last bucket it returns false
+                return false;
+            if (entryIterator.hasNext()) //if it has a next element return true
+                return true;
+            //checks if there are any non-empty buckets after the current one
+            for (int i = currentBucket + 1; i < buckets.length; i++) {
+                if (!buckets[i].isEmpty()) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        //returns the next key in the iteration
+        public K next() {
+            //if the current bucket has more entries it returns the next key
+            if (entryIterator.hasNext())
+                return entryIterator.next().getKey();
+            //moves to the next non-empty bucket
+            while (currentBucket < buckets.length && buckets[currentBucket].isEmpty()) {
+                currentBucket++;
+            }
+            //if that was the last bucket throw exception showing there is no such element
+            if(currentBucket >= buckets.length)
+            {
+                throw new NoSuchElementException();
+            }
+            //update the entryIterator to iterate over the next non-empty bucket
+            entryIterator = buckets[currentBucket].iterator();
+            //returns the key of the first entry in the next non-empty bucket
+            return entryIterator.next().getKey();
+        }
 
     }
 
+    private class ValueIterator implements Iterator<V>{
+        private Iterator<Entry<K,V>> entryIterator = new EntryIterator();
+
+        //checks if there are more values
+        public boolean hasNext(){
+            return entryIterator.hasNext();
+        }
+        //returns the next value
+        public V next(){
+            return entryIterator.next().getValue();
+        }
+    }
+
+    public class EntryIterator implements Iterator<Entry<K,V>>{
+        private int currentBucket;
+        private Iterator<Entry<K,V>> entryIterator;
+
+        //contructor to init the EntryIterator
+        public EntryIterator(){
+            currentBucket = 0;
+            entryIterator = buckets[currentBucket].iterator();
+        }
+
+        //uses the iterator to check if there is a next element in the hash table
+        public boolean hasNext(){
+            //returns false if it is the last bucket
+            if(currentBucket >= buckets.length)
+                return false;
+            //if there is a next bucket it returns true
+            if(entryIterator.hasNext()){
+                return true;
+            }
+            //checks if there are any non-empty buckets after
+            for(int i = currentBucket + 1; i < buckets.length; i++){
+                if(!buckets[i].isEmpty()){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        // returns the next Entry
+        public Entry<K,V> next(){
+            //if there is a next element return that one
+            if(entryIterator.hasNext()){
+                return entryIterator.next();
+            }
+            //moves to the next non empty bucket
+            while(currentBucket < buckets.length && buckets[currentBucket].isEmpty())
+            {
+                currentBucket++;
+            }
+            //if there are no more entries throw an exception
+            if(currentBucket >= buckets.length){
+                throw new NoSuchElementException();
+            }
+            //set it up to interate over the next non empty entry
+            entryIterator = buckets[currentBucket].iterator();
+            //returns the next entry
+            return entryIterator.next();
+        }
+    }
     public int getSize() {
         return size;
     }
