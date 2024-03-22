@@ -39,35 +39,41 @@ public class DictionaryController implements Initializable {
      *
      */
     public void UpdateView(LinesToDisplay lines) {
-        System.out.println("called");
-            String family = "Helvetica";
-            double size = 20;
-            view.getChildren().clear();
 
-            for (int i = 0; i < lines.getCurrentLine(); i++) {
-                TextFlow newLine = new TextFlow();
-                newLine.getChildren().add(new Text(""));
-                Iterator<Wordlet> iter = lines.getLines()[i].getIterator();
+        String family = "Helvetica";
+        double size = 20;
+        view.getChildren().clear();
 
-                while (iter.hasNext()) {
+        for (int i = 0; i < lines.getCurrentLine(); i++) {
+            TextFlow newLine = new TextFlow();
+            newLine.getChildren().add(new Text(""));
+            Iterator<Wordlet> iter = lines.getLines()[i].getIterator();
 
-                    Wordlet word = iter.next();
+            while (iter.hasNext()) {
+                Wordlet word = iter.next();
 
-                    Text checkedWord;
-                    if (word.isSpelledCorrectly()) {
-                        checkedWord = new Text(word.getWord() + " ");
-                        checkedWord.setFill(Color.BLUE);
-                    } else {
-                        checkedWord = new Text(word.getWord() + " ");
-                        checkedWord.setFill(Color.RED);
-                    }
-                    checkedWord.setFont(Font.font(family, size));
-                    newLine.getChildren().add(checkedWord);
+                // Exclude punctuation from the word
+                String wordText = word.getWord();
+
+
+                Text checkedWord;
+                if (word.isSpelledCorrectly()) {
+                    checkedWord = new Text(wordText + " ");
+                    checkedWord.setFill(Color.BLUE);
+                } else {
+                    checkedWord = new Text(wordText + " ");
+                    checkedWord.setFill(Color.RED);
                 }
-                view.getChildren().add(newLine);
-            }
+                checkedWord.setFont(Font.font(family, size));
+                newLine.getChildren().add(checkedWord);
 
+
+            }
+            view.getChildren().add(newLine);
+        }
     }
+
+
 
     public void SetMsg(String message){
         msg.setText(message);
