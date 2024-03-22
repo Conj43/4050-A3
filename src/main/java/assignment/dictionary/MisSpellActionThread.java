@@ -100,8 +100,9 @@ public class MisSpellActionThread implements Runnable {
                 while (input.hasNextLine()) //goes through the file
                 {
                     String line = input.nextLine();
+                    //controller.SetMsg("line being read");
+                    //showLines(myLines);
                     Scanner lineScanner = new Scanner(line); //scanner for reading the lines and dividing them
-                    //String[] words = new String[256]; //max number of words in a line will be 256
                     int wordcount = 0;
                     lineScanner.useDelimiter("\\s+"); //divides the line into words  goes by whitespaces
                     while(lineScanner.hasNext()){
@@ -124,14 +125,12 @@ public class MisSpellActionThread implements Runnable {
                         Wordlet currWord = new Wordlet(word, spelling);
                         myLines.addWordlet(currWord); //adds the wordlet to mylines
                     }
-
-
+                    showLines(myLines);
                     lineScanner.close();
 
 
                 }
-                //Platform.runLater(() -> controller.UpdateView(myLines)); //updates the view for the user
-                showLines(myLines);
+
             } catch (IOException e) {
                 System.out.println("There was an error in reading or opening the file: " + theFileName);
                 System.out.println(e.getMessage());
