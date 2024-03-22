@@ -26,7 +26,7 @@ public class Dictionary extends Application {
         
         Scene scene = new Scene(root);
         stage.getIcons().add(new Image("file:src/main/resources/assignment/dictionary/UMIcon.png"));
-        stage.setTitle("Spelling Checker (SampleApplication)");
+        stage.setTitle("Spelling Checker (Group 19)");
         stage.setScene(scene);
         stage.show();
     }

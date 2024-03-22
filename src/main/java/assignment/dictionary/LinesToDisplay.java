@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 public class LinesToDisplay {
 
-    public static final int LINES = 10;     // Display 10 lines
+    public static final int LINES = 20;     // Display 20 lines
     private AList<Wordlet>[] lines;
     private int currentLine;
 
@@ -18,14 +18,13 @@ public class LinesToDisplay {
      * Constructor for objects of class LinesToDisplay
      */
     public LinesToDisplay() {
-        //ADD CODE FOR THE CONSTRUCTOR
-//>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>        
+
         lines = new AList[LINES]; //create A list of size LINES
         for (int i = 0; i < LINES; i++) {
             lines[i] = new AList<Wordlet>(); //create a new A list of type wordlet for each line
         }
         currentLine = 0; //set current position to 0
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
     }
 
     /**
@@ -33,11 +32,9 @@ public class LinesToDisplay {
      *
      */
     public void addWordlet(Wordlet w) {
-        //ADD CODE HERE TO ADD A WORDLET TO THE CURRENT LINE
 
-//>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>        
        lines[currentLine].add(w); //adds wordlet to current line
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
     }
 
     /**
@@ -46,17 +43,16 @@ public class LinesToDisplay {
      *
      */
     public void nextLine() {
-        //ADD CODE TO HANDLE THE NEXT LINE
-//>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>        
+
     currentLine++; //increase current line
         if (currentLine >= LINES) { //if we are at end of array
-            for(int i = 0 ; i < LINES-1; i++){
+            for(int i = 0 ; i < LINES-1; i++){ //shift lines
                 lines[i] = lines[i + 1];
             }
-            lines[LINES-1] = new AList<>();
-            currentLine = Math.min(currentLine + 1, LINES -1);
+            lines[LINES-1] = new AList<>(); //empty bottom
+            currentLine = Math.min(currentLine + 1, LINES -1); //reset so we dont go out of bounds
         }
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
     }
 
       
