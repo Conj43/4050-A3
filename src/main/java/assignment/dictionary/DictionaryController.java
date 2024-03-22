@@ -3,6 +3,8 @@ package assignment.dictionary;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.ResourceBundle;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -37,27 +39,31 @@ public class DictionaryController implements Initializable {
      *
      */
     public void UpdateView(LinesToDisplay lines) {
-        String family = "Helvetica";
-        double size = 20;
-        view.getChildren().clear();
-        
-        for (int i = 0; i < lines.getCurrentLine(); i++) {
-            TextFlow newLine = new TextFlow();
-            newLine.getChildren().add(new Text(""));
-            Iterator<Wordlet> iter = lines.getLines()[i].getIterator();
-            while (iter.hasNext()) {
-                Wordlet word = iter.next();
-                Text checkedWord = new Text(word.getWord());
-                checkedWord.setFont(Font.font(family, size));
-                if (word.isSpelledCorrectly()) {
-                    checkedWord.setFill(Color.BLUE);
-                } else {
-                    checkedWord.setFill(Color.RED);
+        System.out.println("called");
+            String family = "Helvetica";
+            double size = 20;
+            view.getChildren().clear();
+        System.out.println("current line = " + lines.getCurrentLine());
+            for (int i = 0; i < lines.getCurrentLine(); i++) {
+                TextFlow newLine = new TextFlow();
+                newLine.getChildren().add(new Text(""));
+                Iterator<Wordlet> iter = lines.getLines()[i].getIterator();
+                System.out.println("before loop");
+                while (iter.hasNext()) {
+                    System.out.println("in loop");
+                    Wordlet word = iter.next();
+                    Text checkedWord = new Text(word.getWord());
+                    checkedWord.setFont(Font.font(family, size));
+                    if (word.isSpelledCorrectly()) {
+                        checkedWord.setFill(Color.BLUE);
+                    } else {
+                        checkedWord.setFill(Color.RED);
+                    }
+                    newLine.getChildren().add(checkedWord);
                 }
-                newLine.getChildren().add(checkedWord);
+                view.getChildren().add(newLine);
             }
-            view.getChildren().add(newLine);
-        }
+
     }
 
     public void SetMsg(String message){

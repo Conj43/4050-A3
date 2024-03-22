@@ -72,6 +72,7 @@ public class MisSpellActionThread implements Runnable {
             String word = input.nextLine(); //loop and read each line as a word
             theDictionary.add(word, word); //add to hash table dictionary
         }
+        dictionaryLoaded = true;
         input.close(); //close scanner
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
          
@@ -90,37 +91,40 @@ public class MisSpellActionThread implements Runnable {
      *
      */
     public void checkWords(String theFileName, DictionaryInterface<String, String> theDictionary) {
-        Scanner input;
-        try {
-            input = new Scanner(new File(theFileName)); //scanner for reading the file
 
-            while(input.hasNextLine()) //goes through the file
-            {
-               String line =  input.nextLine();
-               Scanner lineScanner = new Scanner(line); //scanner for reading the lines and dividing them
-               String[] words = new String[256]; //max number of words in a line will be 256
-               lineScanner.useDelimiter("\\s+"); //divides the line into words  goes by whitespaces
-               int lineIndex=0;
-               while(lineScanner.hasNext())
-               {
-                   words[lineIndex]= lineScanner.next(); // puts the words into the words array
-                   lineIndex++;
-               }
-               for(String word : words)
-               {
-                  boolean spelling =  checkWord(word, theDictionary); //checks the spelling of the words
-                   Wordlet currWord = new Wordlet(word, spelling);
-                   myLines.addWordlet(currWord); //adds the wordlet to mylines
-               }
-               controller.UpdateView(myLines); //updates the view for the user
-               lineScanner.close();
+            Scanner input;
+            try {
 
+                input = new Scanner(new File(theFileName)); //scanner for reading the file
+
+                while (input.hasNextLine()) //goes through the file
+                {
+                    String line = input.nextLine();
+                    Scanner lineScanner = new Scanner(line); //scanner for reading the lines and dividing them
+                    String[] words = new String[256]; //max number of words in a line will be 256
+                    lineScanner.useDelimiter("\\s+"); //divides the line into words  goes by whitespaces
+                    int lineIndex = 0;
+                    while (lineScanner.hasNext()) {
+                        words[lineIndex] = lineScanner.next(); // puts the words into the words array
+                        lineIndex++;
+                    }
+                    for (String word : words) {
+                        boolean spelling = checkWord(word, theDictionary); //checks the spelling of the words
+                        Wordlet currWord = new Wordlet(word, spelling);
+                        myLines.addWordlet(currWord); //adds the wordlet to mylines
+                    }
+
+
+                    lineScanner.close();
+
+
+                }
+                Platform.runLater(() -> controller.UpdateView(myLines)); //updates the view for the user
+
+            } catch (IOException e) {
+                System.out.println("There was an error in reading or opening the file: " + theFileName);
+                System.out.println(e.getMessage());
             }
-
-        } catch (IOException e) {
-            System.out.println("There was an error in reading or opening the file: " + theFileName);
-            System.out.println(e.getMessage());
-        }
 
     }
 
@@ -152,6 +156,7 @@ public class MisSpellActionThread implements Runnable {
                 }
             });
         } catch (InterruptedException ex) {
+            ex.printStackTrace();
         }
     }
 
