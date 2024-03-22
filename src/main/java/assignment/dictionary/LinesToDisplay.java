@@ -49,10 +49,12 @@ public class LinesToDisplay {
         //ADD CODE TO HANDLE THE NEXT LINE
 //>>>>>>>>>>> ADDED CODE >>>>>>>>>>>>>>>>>>>>>>        
     currentLine++; //increase current line
-        if (currentLine == LINES) { //if we are at end of array
-            System.arraycopy(lines, 1, lines, 0, LINES - 1); //copy array and shift each element up one
-            lines[LINES - 1] = new AList<>(); //clears last line by overriding it
-            currentLine--; // decrement so we do not go out of bounds
+        if (currentLine >= LINES) { //if we are at end of array
+            for(int i = 0 ; i < LINES-1; i++){
+                lines[i] = lines[i + 1];
+            }
+            lines[LINES-1] = new AList<>();
+            currentLine = Math.min(currentLine + 1, LINES -1);
         }
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
